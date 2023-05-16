@@ -15,3 +15,4 @@ MonoBehaviour:
   type: 0
   plantName: Plant 1
   plant: {fileID: 4089297364291920298, guid: 5bc4702386d454327b5d953f5ad3a412, type: 3}
+  growthTime: 5

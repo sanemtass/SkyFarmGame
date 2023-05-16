@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlantedAreaController : MonoBehaviour
 {
-    public PlantedArea plantedArea;
-
     // Eklenmiş bir bitki var mı diye kontrol etmek için bir bool değişkeni
-    private bool hasPlant = false;
+    [SerializeField] private bool hasPlant = false;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            // Bitkinin durumunu güncelle
+            hasPlant = (transform.childCount > 0);
+
             // Eğer zaten bir bitki ekilmişse, daha fazla bitki eklemeyi engelle
             if (hasPlant)
             {

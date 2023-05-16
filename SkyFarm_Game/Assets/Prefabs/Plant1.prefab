@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5152223491681170524}
   - component: {fileID: 5248725211705166990}
   - component: {fileID: 2515357650652114593}
+  - component: {fileID: 6280781448982794410}
   m_Layer: 0
   m_Name: Plant1
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,8 +93,22 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4089297364291920298}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6280781448982794410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089297364291920298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49be927f9887e4119bf00e70586922b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plants: {fileID: 11400000, guid: 22b0ab6920c0a40568d25a20c8d31dab, type: 2}
+  isGrown: 0

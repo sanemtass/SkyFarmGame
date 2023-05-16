@@ -950,6 +950,7 @@ GameObject:
   - component: {fileID: 818242027}
   - component: {fileID: 818242033}
   - component: {fileID: 818242032}
+  - component: {fileID: 818242034}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -965,7 +966,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818242026}
   serializedVersion: 2
-  m_Mass: 0.7
+  m_Mass: 0.6
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1045,7 +1046,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818242026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.58, y: 0.86, z: -2.22}
+  m_LocalPosition: {x: 1.58, y: 0.89, z: -2.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1076,9 +1077,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a204afce352a1495094262e3c7c77d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 500
-  rotateSpeed: 0.1
-  rotateSmooth: 0.1
+  moveSpeed: 400
+  rotateSpeed: 0.5
+  rotateSmooth: 0.3
+--- !u!114 &818242034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818242026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22631f43901d542b0b29486efc604b31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFromPlayer: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
