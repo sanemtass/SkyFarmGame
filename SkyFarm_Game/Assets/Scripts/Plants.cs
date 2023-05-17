@@ -16,7 +16,6 @@ public class Plants : ScriptableObject
     public string plantName;
     public GameObject plant;
     public float growthTime;
-    //public int price; // Öğenin fiyatı
-    // Diğer özellikler
+    public int value; // Öğenin fiyatı
 }
 

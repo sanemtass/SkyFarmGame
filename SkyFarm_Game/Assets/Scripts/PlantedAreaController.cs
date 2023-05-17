@@ -7,13 +7,10 @@ public class PlantedAreaController : MonoBehaviour
     // Eklenmiş bir bitki var mı diye kontrol etmek için bir bool değişkeni
     [SerializeField] private bool hasPlant = false;
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Bitkinin durumunu güncelle
-            hasPlant = (transform.childCount > 0);
-
             // Eğer zaten bir bitki ekilmişse, daha fazla bitki eklemeyi engelle
             if (hasPlant)
             {
@@ -37,5 +34,11 @@ public class PlantedAreaController : MonoBehaviour
                 hasPlant = true;
             }
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // Bitkinin durumunu güncelle
+        hasPlant = (transform.childCount > 0);
     }
 }

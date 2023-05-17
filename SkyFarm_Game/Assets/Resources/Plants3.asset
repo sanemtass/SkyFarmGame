@@ -16,3 +16,4 @@ MonoBehaviour:
   plantName: Plant 3
   plant: {fileID: 918806351950692357, guid: 0e0824a7f05d04abc85a3088163a7e9d, type: 3}
   growthTime: 11
+  value: 30

@@ -1,17 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public Plants[] allPlants;
-
     public Plants.PlantType selectedPlantType;
+
+    public IntVariable gold;
+    public event Action<int> OnGoldChanged;
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    public void ChangeGold(int amount)
+    {
+        gold.count += amount;
+        OnGoldChanged?.Invoke(gold.count);
     }
 
     public void SelectPlant1()
