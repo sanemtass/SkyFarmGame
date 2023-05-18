@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plant
   - SalesArea
+  - NPC
   layers:
   - Default
   - TransparentFX
