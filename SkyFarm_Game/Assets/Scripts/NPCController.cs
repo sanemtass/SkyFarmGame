@@ -1,16 +1,17 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class NPCController : MonoBehaviour
 {
     private NavMeshAgent agent;
-    private GameObject targetPlant; // Hedef bitki
+    private GameObject targetPlant;
     private bool isCollecting = false;
-    private bool isSelling = false; // NPC'nin bitki satmak için SalesArea'ya gidiyor olup olmadığını kontrol eder
+    private bool isSelling = false;
+    [SerializeField] private List<Plants> carriedPlants = new List<Plants>();  // NPC'nin taşıdığı bitkilerin listesi
 
-    public Transform salesArea; // SalesArea'nın Transform componenti
-
-    [SerializeField] private int maxPlantCarryCapacity; // NPC'nin taşıyabileceği maksimum bitki sayısı
+    public Transform salesArea;
+    [SerializeField] private int maxPlantCarryCapacity;
     private int currentPlantCarryCount = 0;
     private int plantValue = 0;
     public Vector3 startLocation;
@@ -22,38 +23,50 @@ public class NPCController : MonoBehaviour
         {
             Debug.LogError("No NavMeshAgent attached to " + gameObject.name);
         }
-
-        // Taşıma kapasitesini 2 ile 5 arasında bir sayı olarak belirle
-        maxPlantCarryCapacity = Random.Range(2, 5); // Random.Range üst limiti dahil etmediği için 6 yazıyoruz
+        maxPlantCarryCapacity = Random.Range(2, 5);
+        agent.speed = Random.Range(3, 6); // Bu satır NPC'nin hızını rastgele bir değerle ayarlar.
         Debug.Log(maxPlantCarryCapacity);
+        startLocation = transform.position;
     }
 
     private void Update()
     {
-        if (isSelling) // Eğer NPC satış yapmak için SalesArea'ya doğru hareket ediyorsa
-        {
-            // SalesArea'ya doğru hareket et
-            agent.SetDestination(salesArea.position);
+        int grownPlantsCount = CountGrownPlants();
 
-            // SalesArea'ya yeterince yaklaştıysa
+        if (isSelling)
+        {
+            agent.SetDestination(salesArea.position);
             if (Vector3.Distance(transform.position, salesArea.position) < agent.stoppingDistance)
             {
-                // Bitkiyi sat ve altın miktarını arttır
                 SellPlant();
             }
         }
-        else if (!isCollecting) // Eğer bir bitki toplanmak üzere işaretlenmemişse, yeni bir bitki ara
+        else if (!isCollecting && grownPlantsCount >= maxPlantCarryCapacity) // Eğer bir bitki toplanmak üzere işaretlenmemişse ve olgunlaşmış bitki sayısı taşıma kapasitesinden fazla veya eşitse, yeni bir bitki ara
         {
             FindPlant();
         }
-        else if (targetPlant != null && isCollecting) // Eğer hedeflenen bitki varsa ve bitki toplanmak üzere işaretlenmişse
+        else if (isCollecting)
         {
-            // Hedeflenen bitkiye doğru hareket et
-            agent.SetDestination(targetPlant.transform.position);
-        }
-        else
-        {
-            isCollecting = false; // Bitki artık hedeflenmiyor, yeni bir bitki ara
+            if (targetPlant != null)
+            {
+                if (currentPlantCarryCount < maxPlantCarryCapacity && grownPlantsCount >= maxPlantCarryCapacity)
+                {
+                    // Yeterli sayıda bitki olgunlaştıysa, toplamayı devam et
+                    agent.SetDestination(targetPlant.transform.position);
+                }
+                else
+                {
+                    // Aksi takdirde toplamayı durdur ve başlangıç konumuna dön
+                    isCollecting = false;
+                    agent.SetDestination(startLocation);
+                }
+            }
+            else
+            {
+                // targetPlant null olduğunda isCollecting durumunu false yap ve başlangıç konumuna dön
+                isCollecting = false;
+                agent.SetDestination(startLocation);
+            }
         }
     }
 
@@ -76,7 +89,6 @@ public class NPCController : MonoBehaviour
 
     private void FindPlant()
     {
-        // Bitkileri ara ve en yakın olanı hedefle
         GameObject[] plants = GameObject.FindGameObjectsWithTag("Plant");
         float closestDistance = Mathf.Infinity;
         GameObject closestPlant = null;
@@ -94,7 +106,6 @@ public class NPCController : MonoBehaviour
             }
         }
 
-        // Yeni bir hedef bitki belirle
         if (closestPlant != null)
         {
             targetPlant = closestPlant;
@@ -102,76 +113,73 @@ public class NPCController : MonoBehaviour
         }
         else
         {
-            targetPlant = null; // Hedef bitki yok
+            targetPlant = null;
             isCollecting = false;
         }
     }
 
     private void CollectPlant(PlantController plantController)
     {
-        // Toplanan bitkilerin değerini sakla
-        plantValue += plantController.plants.value;
-
-        // Bitkiyi yok et
-        Destroy(plantController.gameObject);
-
-        // NPC'nin taşıdığı bitki sayısını artır
-        currentPlantCarryCount++;
-
-        // Eğer NPC taşıma kapasitesine ulaştıysa
-        if (currentPlantCarryCount >= maxPlantCarryCapacity)
+        int grownPlantsCount = CountGrownPlants();
+        if (grownPlantsCount >= maxPlantCarryCapacity)
         {
-            // Bitki toplamayı durdur
-            isCollecting = false;
+            plantValue += plantController.plants.value;
+            carriedPlants.Add(plantController.plants);
+            Destroy(plantController.gameObject);
+            currentPlantCarryCount++;
 
-            // Geriye kalan bitkilerin sayısı taşıma kapasitesinden fazlaysa,
-            // NPC'nin başlangıç konumuna dönecek şekilde ayarla
-            GameObject[] plants = GameObject.FindGameObjectsWithTag("Plant");
-            int grownPlantsCount = 0;
-            foreach (GameObject plant in plants)
+            // Eğer taşıma kapasitesi doluysa satışa git
+            if (currentPlantCarryCount >= maxPlantCarryCapacity)
             {
-                PlantController plantCtrl = plant.GetComponent<PlantController>();
-                if (plantCtrl != null && plantCtrl.isGrown)
-                {
-                    grownPlantsCount++;
-                }
-            }
-
-            if (grownPlantsCount > maxPlantCarryCapacity)
-            {
-                agent.SetDestination(startLocation); // Başlangıç konumuna geri dön
+                isCollecting = false;
+                isSelling = true;
             }
             else
             {
-                isSelling = true; // Satış alanına git
+                // Aksi takdirde yeni bir bitki bul
+                FindPlant();
             }
         }
         else
         {
-            // Aksi takdirde yeni bir bitki bul
-            FindPlant();
+            // Başlangıç konumuna dön
+            agent.SetDestination(startLocation);
         }
+    }
+
+    // Olgun bitkilerin sayısını hesaplar
+    private int CountGrownPlants()
+    {
+        GameObject[] plants = GameObject.FindGameObjectsWithTag("Plant");
+        int grownPlantsCount = 0;
+        foreach (GameObject plant in plants)
+        {
+            PlantController plantCtrl = plant.GetComponent<PlantController>();
+            if (plantCtrl != null && plantCtrl.isGrown)
+            {
+                grownPlantsCount++;
+            }
+        }
+        return grownPlantsCount;
     }
 
     private void SellPlant()
     {
         if (isSelling)
         {
-            // Bitkinin değerini toplam altına ekleyin
-            GameManager.Instance.gold.count += plantValue;
+            foreach (var plant in carriedPlants)
+            {
+                GameManager.Instance.gold.count += plant.value;
+                GameManager.Instance.ChangeGold(plant.value);
+            }
 
-            // Altın değişikliğini yayınla
-            GameManager.Instance.ChangeGold(plantValue);
+            currentPlantCarryCount = 0;
+            plantValue = 0;
+            carriedPlants.Clear();  // Listeyi temizle
 
             isSelling = false;
 
-            // Bitkileri sattıktan sonra bitki taşıma sayısını ve bitki değerini sıfırla
-            currentPlantCarryCount = 0;
-            plantValue = 0;
-
-            // Satış yaptıktan sonra yeni bir bitki ara
             FindPlant();
         }
     }
-
 }

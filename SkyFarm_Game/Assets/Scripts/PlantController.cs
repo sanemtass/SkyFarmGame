@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlantController : MonoBehaviour
 {
@@ -22,6 +23,5 @@ public class PlantController : MonoBehaviour
 
         Debug.Log("Plant has grown.");
         isGrown = true;
-
     }
 }
