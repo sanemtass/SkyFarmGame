@@ -40,6 +40,18 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
 
+        if (other.CompareTag("Cube"))
+        {
+            CuttableTree cuttableTree = other.GetComponent<CuttableTree>();
+            Debug.Log("A");
+
+            if (cuttableTree != null && !cuttableTree.isCut)
+            {
+                Debug.Log("B");
+                cuttableTree.Cut();
+            }
+        }
+
         if (other.CompareTag("SalesArea"))
         {
             UsePlant();

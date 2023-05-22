@@ -81,6 +81,7 @@ public class NPCController : MonoBehaviour
                 CollectPlant(plantController);
             }
         }
+
         else if (other.CompareTag("SalesArea") && isSelling)
         {
             SellPlant();
