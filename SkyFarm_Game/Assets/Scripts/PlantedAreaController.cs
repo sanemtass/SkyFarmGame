@@ -39,6 +39,14 @@ public class PlantedAreaController : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         // Bitkinin durumunu güncelle
-        hasPlant = (transform.childCount > 0);
+        if((transform.childCount > 0))
+        {
+            hasPlant = true;
+        }
+        if ((transform.childCount < 0)) //yanlış
+        {
+            hasPlant = false;
+        }
+
     }
 }

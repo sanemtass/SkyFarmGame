@@ -7,6 +7,7 @@ public class PlantController : MonoBehaviour
 {
     public Plants plants;
     public bool isGrown = false;
+    public bool isCollected = false;
 
     private void Start()
     {

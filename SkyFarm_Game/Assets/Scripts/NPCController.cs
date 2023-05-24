@@ -76,12 +76,12 @@ public class NPCController : MonoBehaviour
         {
             PlantController plantController = other.GetComponent<PlantController>();
 
-            if (plantController != null && plantController.isGrown)
+            // Bitkiyi sadece eğer bitki büyümüş ve henüz toplanmamışsa topla
+            if (plantController != null && plantController.isGrown && !plantController.isCollected)
             {
                 CollectPlant(plantController);
             }
         }
-
         else if (other.CompareTag("SalesArea") && isSelling)
         {
             SellPlant();
@@ -122,12 +122,15 @@ public class NPCController : MonoBehaviour
     private void CollectPlant(PlantController plantController)
     {
         int grownPlantsCount = CountGrownPlants();
-        if (grownPlantsCount >= maxPlantCarryCapacity)
+        if (grownPlantsCount >= maxPlantCarryCapacity && !plantController.isCollected)
         {
             plantValue += plantController.plants.value;
             carriedPlants.Add(plantController.plants);
             Destroy(plantController.gameObject);
             currentPlantCarryCount++;
+
+            // Bitkiyi toplandı olarak işaretle
+            plantController.isCollected = true;
 
             // Eğer taşıma kapasitesi doluysa satışa git
             if (currentPlantCarryCount >= maxPlantCarryCapacity)

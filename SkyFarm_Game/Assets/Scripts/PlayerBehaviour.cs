@@ -25,8 +25,8 @@ public class PlayerBehaviour : MonoBehaviour
             // Bitki üzerindeki PlantController scriptine eriş
             PlantController plantController = other.GetComponent<PlantController>();
 
-            // Eğer bitki üzerinde PlantController ve PlantBehaviour scripti var ve bitki büyümüşse
-            if (plantController != null && plantController.isGrown == true)
+            // Eğer bitki üzerinde PlantController ve PlantBehaviour scripti var, bitki büyümüş ve henüz toplanmamışsa
+            if (plantController != null && plantController.isGrown == true && plantController.isCollected == false)
             {
                 plantStack.Push(plantController.plants); // Bitkiyi stack'e ekle
                 plantObjects.Push(other.gameObject); // Bitkinin GameObject versiyonunu stack'e ekle
@@ -37,6 +37,8 @@ public class PlayerBehaviour : MonoBehaviour
                 // Bitkiyi player'ın önünde ve bir önceki bitkinin üzerine yerleştir
                 other.transform.localPosition = Vector3.forward * distanceFromPlayer + Vector3.up * (plantStack.Count - 1) * plantHeight;
                 other.transform.localRotation = Quaternion.identity;
+
+                plantController.isCollected = true; // Bitkinin toplandığını belirt
             }
         }
 

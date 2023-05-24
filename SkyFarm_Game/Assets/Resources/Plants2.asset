@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   plantName: Plant 2
-  plant: {fileID: 7200346293307855033, guid: 93189bef3778e4c739b1e491fe92f2c4, type: 3}
+  plant: {fileID: 303235375498070785, guid: 501dde18f17c44f81b55d888ca4dd45a, type: 3}
   growthTime: 8
   value: 20
