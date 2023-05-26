@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 5473673925337517181}
   m_Layer: 0
   m_Name: kahve karo.008
-  m_TagString: Untagged
+  m_TagString: PlantedArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -196,3 +196,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasPlant: 0
+  playerBehaviour: {fileID: 0}

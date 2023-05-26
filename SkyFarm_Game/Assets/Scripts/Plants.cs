@@ -15,6 +15,7 @@ public class Plants : ScriptableObject
     public PlantType type;
     public string plantName;
     public GameObject plant;
+    public GameObject newPlantPrefab; // Bitkinin toplandığında görünümü
     public float growthTime;
     public int value; // Öğenin fiyatı
 }

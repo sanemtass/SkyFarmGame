@@ -11,6 +11,9 @@ public class JoystickController : MonoBehaviour
     private float collectorRotateSpeed;
     private float collectorRotateSmooth;
 
+    public bool IsWalking { get; private set; } = false;
+    public Animator animator;
+
     public void SetJoystickParameters(Joystick joystick, Transform transform, Rigidbody rigidbody, float moveSpeed, float rotateSpeed, float rotateSmooth)
     {
         this.joystick = joystick;
@@ -28,18 +31,23 @@ public class JoystickController : MonoBehaviour
 
         if (joystick.Horizontal != 0 && joystick.Vertical != 0)
         {
+            IsWalking = true;
             Vector3 collectPos = new Vector3(horizontal, 0, vertical);
-            collectorRigidbody.AddForce(collectPos * collectorMoveSpeed * Time.deltaTime);//Move with physics.
-                                                                                          //Vector3 movePos = new Vector3(horizontal * moveSpeed * Time.deltaTime, 0, vertical * moveSpeed * Time.deltaTime);//Move with transform. 
-                                                                                          // transform.position += movePos;
+            collectorRigidbody.AddForce(collectPos * collectorMoveSpeed * Time.deltaTime);
+
+            animator.SetBool("IsWalking", IsWalking);
 
             Vector3 direction = (Vector3.forward * vertical) + (Vector3.right * horizontal);
             colletorTransform.rotation = Quaternion.Slerp(colletorTransform.rotation, Quaternion.LookRotation(direction), collectorRotateSmooth);
+            collectorRigidbody.isKinematic = false;
         }
-
         else
         {
+            IsWalking = false;
+            animator.SetBool("IsWalking", IsWalking);
+            animator.SetBool("IsPlantStacking", false);
             collectorRigidbody.velocity = Vector3.zero;
+            collectorRigidbody.isKinematic = true;
         }
     }
 }

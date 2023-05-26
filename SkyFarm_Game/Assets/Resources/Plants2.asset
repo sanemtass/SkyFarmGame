@@ -15,5 +15,7 @@ MonoBehaviour:
   type: 1
   plantName: Plant 2
   plant: {fileID: 303235375498070785, guid: 501dde18f17c44f81b55d888ca4dd45a, type: 3}
+  newPlantPrefab: {fileID: 918806351950692357, guid: b56fb4e748c7443d5a5aed38c937f389,
+    type: 3}
   growthTime: 8
   value: 20

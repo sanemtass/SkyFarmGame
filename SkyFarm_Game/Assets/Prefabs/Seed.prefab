@@ -1079,6 +1079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plants: {fileID: 11400000, guid: 22b0ab6920c0a40568d25a20c8d31dab, type: 2}
   isGrown: 0
+  isCollected: 0
 --- !u!65 &751617169852348261
 BoxCollider:
   m_ObjectHideFlags: 0

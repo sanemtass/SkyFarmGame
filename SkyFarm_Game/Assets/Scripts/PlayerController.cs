@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     [SerializeField] float rotateSpeed;
-    [SerializeField] float rotateSmooth;
+    [Range(0,1)] [SerializeField] float rotateSmooth;
 
     private Joystick joystick;
     private Rigidbody rb;

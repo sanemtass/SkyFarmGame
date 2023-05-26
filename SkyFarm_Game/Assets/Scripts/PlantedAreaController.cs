@@ -6,6 +6,7 @@ public class PlantedAreaController : MonoBehaviour
 {
     // Eklenmiş bir bitki var mı diye kontrol etmek için bir bool değişkeni
     [SerializeField] private bool hasPlant = false;
+    [SerializeField] private PlayerBehaviour playerBehaviour;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -39,14 +40,32 @@ public class PlantedAreaController : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         // Bitkinin durumunu güncelle
-        if((transform.childCount > 0))
+        int plantCount = 0;
+        foreach (Transform child in transform)
+        {
+            if (child.tag == "Plant")
+            {
+                plantCount++;
+            }
+        }
+
+        if (plantCount > 0)
         {
             hasPlant = true;
         }
-        if ((transform.childCount < 0)) //yanlış
+
+        else if (plantCount == 0)
         {
             hasPlant = false;
         }
 
+        if (other.CompareTag("Player"))
+        {
+            PlayerBehaviour playerBehaviour = other.GetComponent<PlayerBehaviour>();
+            if (playerBehaviour != null)
+            {
+                playerBehaviour.PlayPlantingAnimation();
+            }
+        }
     }
 }

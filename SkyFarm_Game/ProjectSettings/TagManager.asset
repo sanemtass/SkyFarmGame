@@ -8,6 +8,7 @@ TagManager:
   - SalesArea
   - NPC
   - Cube
+  - PlantedArea
   layers:
   - Default
   - TransparentFX

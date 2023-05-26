@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1707595943867876943}
   m_Layer: 0
   m_Name: Sprout
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plants: {fileID: 11400000, guid: e70e5fe617d41435da2b4ec66db796d0, type: 2}
   isGrown: 0
+  isCollected: 0
 --- !u!65 &1707595943867876943
 BoxCollider:
   m_ObjectHideFlags: 0
