@@ -5,13 +5,14 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float moveSpeed;
-    [SerializeField] float rotateSpeed;
+    public float moveSpeed = 400f;
+    public float rotateSpeed;
     [Range(0,1)] [SerializeField] float rotateSmooth;
 
     private Joystick joystick;
     private Rigidbody rb;
     private JoystickController joystickController;
+    private PlayerBehaviour playerBehaviour;
 
     private void Awake()
     {
@@ -22,7 +23,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        joystickController.SetJoystickParameters(joystick, transform, rb, moveSpeed, rotateSpeed, rotateSmooth);
+        playerBehaviour = GetComponent<PlayerBehaviour>();
+        joystickController.SetJoystickParameters(joystick, transform, rb, playerBehaviour.animators, playerBehaviour.activeChildIndex, moveSpeed, rotateSpeed, rotateSmooth);
     }
 
     private void FixedUpdate()

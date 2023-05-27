@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public IntVariable gold;
     public event Action<int> OnGoldChanged;
+    public PlayerBehaviour playerBehaviour;
+    public JoystickController joystickController;
 
     private void Awake()
     {
@@ -49,4 +51,24 @@ public class GameManager : MonoBehaviour
         Debug.LogError("Invalid plant type: " + selectedPlantType);
         return null;
     }
+
+    public void SwitchChildObject()
+    {
+        // PlayerBehaviour nesnesine bir referans alın
+        PlayerBehaviour playerBehaviour = GameManager.Instance.playerBehaviour;
+
+        // activeChildIndex ve activeHandIndex değerini artırın ve çocuk objelerin sayısına göre modunu alın
+        int newChildIndex = (playerBehaviour.activeChildIndex + 1) % playerBehaviour.childObjectsWithAnimators.Length;
+
+        // Karakteri yükseltin
+        playerBehaviour.UpgradeCharacter(newChildIndex);
+
+        // Çocuk objesini ve el objesini değiştirin
+        playerBehaviour.SwitchChildObject(newChildIndex);
+        playerBehaviour.SwitchHandObject(newChildIndex);  // Hand objesini de değiştirin
+
+        // JoystickController çocuk nesnesini de değiştirin
+        joystickController.SwitchChildObject(newChildIndex);
+    }
+
 }

@@ -11,9 +11,14 @@ public class PlayerBehaviour : MonoBehaviour
     public Transform salesArea;
     public GameObject handObject; // Hand objesine bir referans ekleyin
     public GameObject[] childObjectsWithAnimators; // Unity inspector'da ayarlayın
-    private Animator[] animators;
-    private int activeChildIndex = 0;
+    public Animator[] animators;
+    public int activeChildIndex = 0;
+    public GameObject[] handObjects; // Elin objelerine bir dizi referansı ekleyin
+    public int activeHandIndex = 0;
+    public float speed = 400f;
+    public int maxPlantCapacity = 3;
 
+    private PlayerController playerController;
 
     [SerializeField] private Stack<GameObject> plantObjects; // Bitkilerin GameObject versiyonlarını tutmak için bir Stack oluşturduk
 
@@ -24,12 +29,31 @@ public class PlayerBehaviour : MonoBehaviour
         {
             animators[i] = childObjectsWithAnimators[i].GetComponent<Animator>();
         }
+
+        if (handObjects.Length > 0)
+        {
+            for (int i = 0; i < handObjects.Length; i++)
+            {
+                if (i == activeHandIndex)
+                {
+                    handObjects[i].SetActive(true);  // Aktif el objesini açın
+                    handObject = handObjects[i];
+                }
+                else
+                {
+                    handObjects[i].SetActive(false);  // Diğer el objelerini kapatın
+                }
+            }
+        }
+
+        SwitchChildObject(activeChildIndex);
     }
 
     private void Start()
     {
         plantStack = new Stack<Plants>(); // Plants Stack'ı başlat
         plantObjects = new Stack<GameObject>(); // GameObject Stack'ı başlat
+        playerController = GetComponent<PlayerController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,8 +66,8 @@ public class PlayerBehaviour : MonoBehaviour
             // Eğer bitki üzerinde PlantController ve PlantBehaviour scripti var, bitki büyümüş ve henüz toplanmamışsa
             if (plantController != null && plantController.isGrown == true && plantController.isCollected == false)
             {
-                // Eğer stack'in boyutu zaten 3 veya daha büyükse, yeni bitki eklemeyi engelle
-                if (plantStack.Count >= 3)
+                // Eğer stack'in boyutu zaten maxPlantCapacity veya daha büyükse, yeni bitki eklemeyi engelle
+                if (plantStack.Count >= maxPlantCapacity)
                 {
                     Debug.Log("Player can't carry any more plants!");
                     return;
@@ -146,12 +170,48 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (newChildIndex >= 0 && newChildIndex < childObjectsWithAnimators.Length)
         {
-            animators[activeChildIndex].SetBool("IsPlantStacking", false); // Eski çocuğun animasyonlarını sıfırla
-            animators[activeChildIndex].SetBool("IsWalking", false); // Eski çocuğun animasyonlarını sıfırla
+            if (childObjectsWithAnimators[newChildIndex] == null)
+            {
+                Debug.LogError("Child object is null at index " + newChildIndex);
+                return;
+            }
+
+            Animator animator = childObjectsWithAnimators[newChildIndex].GetComponent<Animator>();
+            if (animator == null)
+            {
+                Debug.LogError("No Animator component on child object at index " + newChildIndex);
+                return;
+            }
+
+            if (animator.runtimeAnimatorController == null)
+            {
+                Debug.LogError("No AnimatorController set on Animator of child object at index " + newChildIndex);
+                return;
+            }
 
             childObjectsWithAnimators[activeChildIndex].SetActive(false); // Eski çocuğu kapat
             childObjectsWithAnimators[newChildIndex].SetActive(true); // Yeni çocuğu aç
+            animator.Rebind(); // Yeni çocuğun animatörünü resetle ve başlat
             activeChildIndex = newChildIndex; // Aktif çocuğun indexini güncelle
+
+            SwitchHandObject(activeChildIndex); // Elin indexini güncelle
+        }
+    }
+
+    public void SwitchHandObject(int newHandIndex)
+    {
+        // Eğer yeni dizin geçerli bir dizinse ve farklı bir dizinse
+        if (newHandIndex >= 0 && newHandIndex < handObjects.Length && newHandIndex != activeHandIndex)
+        {
+            // Eski aktif eli deaktif hale getir
+            handObjects[activeHandIndex].SetActive(false);
+
+            // Yeni aktif eli aktif hale getir
+            handObjects[newHandIndex].SetActive(true);
+
+            // Aktif eli değiştir
+            handObject = handObjects[newHandIndex];
+            activeHandIndex = newHandIndex;
         }
     }
 
@@ -170,4 +230,22 @@ public class PlayerBehaviour : MonoBehaviour
             animators[activeChildIndex].SetBool("IsPlanting", true);
         }
     }
+
+    public void UpgradeCharacter(int newIndex)
+    {
+        // Karakterin taşıma kapasitesini ve hızını yükseltin
+        if (newIndex == 1)
+        {
+            speed += 100;
+            playerController.moveSpeed = speed;  // Karakterin hızını güncelle
+            maxPlantCapacity += 2;
+        }
+        else if (newIndex == 2)
+        {
+            speed += 200;  // Örneğin, hızı daha fazla artırabiliriz
+            playerController.moveSpeed = speed;  // Karakterin hızını güncelle
+            maxPlantCapacity += 3;  // Örneğin, taşıma kapasitesini daha fazla artırabiliriz
+        }
+    }
+
 }
