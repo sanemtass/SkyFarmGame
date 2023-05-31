@@ -18,7 +18,10 @@ public class PlantedAreaSpawner : MonoBehaviour
     public int areasPerGroup = 18;
     private int currentAreaGroup = 0;
     private float gridOffset = 0;
-    private const float OFFSET_BETWEEN_GROUPS = 9.3f;
+    public float OFFSET_BETWEEN_GROUPS = 9.3f;
+
+    public bool isSecondArea;
+    public float sayiaq;
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class PlantedAreaSpawner : MonoBehaviour
     void Start()
     {
         allPlantedAreas = new List<PlantedAreaController>();
+        gridOffset = isSecondArea ? sayiaq * (currentAreaGroup + 1) : 0; // if isSecondArea is true, gridOffset will be 30 * (currentAreaGroup + 1), otherwise 0
         SpawnInitialAreas();
     }
 
@@ -45,6 +49,7 @@ public class PlantedAreaSpawner : MonoBehaviour
         if (currentAreaGroup >= 2)
         {
             Debug.Log("Two groups of areas have been created. No more areas will be created.");
+            UIManager.Instance.ShowAddNewLandButton();
             return;
         }
 
@@ -88,7 +93,19 @@ public class PlantedAreaSpawner : MonoBehaviour
                 currentGridPosition = Vector2Int.zero; // reset grid position for new group
             }
         }
+
+        if (allPlantedAreas.Count >= (currentAreaGroup + 1) * areasPerGroup)
+        {
+            currentAreaGroup++;
+
+            // Increase the offset for the next group only for the second PlantedAreaSpawner
+            if (isSecondArea)
+            {
+                gridOffset += 30;  // Increase gridOffset by 30 for each new group.
+            }
+
+            currentGridPosition = Vector2Int.zero; // reset grid position for new group
+        }
     }
 
 }
-

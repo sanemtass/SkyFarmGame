@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
+using TMPro;
 
 public class NPCController : MonoBehaviour
 {
@@ -28,6 +30,11 @@ public class NPCController : MonoBehaviour
     public Animator childAnimator1;
     public Animator childAnimator2;
 
+    public GameObject npcUiElement;
+    public TextMeshProUGUI speedText;
+
+    public Button startCollectingButton;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -40,16 +47,32 @@ public class NPCController : MonoBehaviour
         Debug.Log(maxPlantCarryCapacity);
         //startLocation = transform.position;
 
-       //animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
 
-        // Initially, only the first child object should be active
         childObject1.SetActive(true);
         childObject2.SetActive(false);
 
         childAnimator1 = childObject1.GetComponent<Animator>();
         childAnimator2 = childObject2.GetComponent<Animator>();
 
-        StartCheckingPlants();
+        npcUiElement.SetActive(false);
+
+        speedText.text = agent.speed.ToString();
+
+        startCollectingButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.SelectNPC(this);
+            GameManager.Instance.StartSelectedNPC();
+        });
+
+    }
+
+    public void StartCollecting()
+    {
+        if (checkPlantsCoroutine == null)
+        {
+            checkPlantsCoroutine = StartCoroutine(CheckPlants());
+        }
     }
 
     public void StartCheckingPlants()
@@ -73,13 +96,16 @@ public class NPCController : MonoBehaviour
     {
         while (true)
         {
-            int grownPlantsCount = CountGrownPlants();
-
-            if (grownPlantsCount >= maxPlantCarryCapacity)
+            if (GameManager.Instance.selectedNPC == this && !GameManager.Instance.isNewLandActive)
             {
-                if (!isCollecting && !isSelling)
+                int grownPlantsCount = CountGrownPlants();
+
+                if (grownPlantsCount >= maxPlantCarryCapacity)
                 {
-                    FindPlant();
+                    if (!isCollecting && !isSelling)
+                    {
+                        FindPlant();
+                    }
                 }
             }
 
@@ -87,13 +113,18 @@ public class NPCController : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
+        if (GameManager.Instance.isNewLandActive) return;
+
+        if (GameManager.Instance.selectedNPC != this) return;
+
         int grownPlantsCount = CountGrownPlants();
 
         if (currentPlantCarryCount >= maxPlantCarryCapacity)
         {
-            isSelling = true;  // Set isSelling to true when the NPC has enough plants
+            isSelling = true;
         }
 
         if (grownPlantsCount >= maxPlantCarryCapacity)
@@ -113,7 +144,7 @@ public class NPCController : MonoBehaviour
         }
         else if (isSelling)
         {
-            agent.SetDestination(salesArea.position);  // add this line
+            agent.SetDestination(salesArea.position);
         }
         else if (isCollecting)
         {
@@ -139,8 +170,8 @@ public class NPCController : MonoBehaviour
         if (!isCollecting && !isSelling && Vector3.Distance(transform.position, startLocation.position) < agent.stoppingDistance)
         {
             // Set the rotation
-            transform.rotation = Quaternion.Euler(0, 0, 0);  // Change the Euler angles as needed
-            Debug.Log("NPC is rotating");  // Add this line
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            Debug.Log("NPC is rotating");
         }
 
     }
@@ -160,10 +191,26 @@ public class NPCController : MonoBehaviour
         {
             SellPlant();
         }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            // Show the UI element
+            npcUiElement.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            npcUiElement.SetActive(false);
+        }
     }
 
     private void FindPlant()
     {
+        if (GameManager.Instance.selectedNPC != this) return;
+
         GameObject[] plants = GameObject.FindGameObjectsWithTag("Plant");
         float closestDistance = Mathf.Infinity;
         GameObject closestPlant = null;
@@ -196,6 +243,8 @@ public class NPCController : MonoBehaviour
 
     private void CollectPlant(PlantController plantController)
     {
+        if (GameManager.Instance.selectedNPC != this) return;
+
         int grownPlantsCount = CountGrownPlants();
         if (grownPlantsCount >= maxPlantCarryCapacity && !plantController.isCollected)
         {
@@ -205,9 +254,8 @@ public class NPCController : MonoBehaviour
             currentPlantCarryCount++;
 
             plantController.isCollected = true;
-            plantController.isGrown = false;  // Make sure to set this to false when a plant is collected
+            plantController.isGrown = false;
 
-            // Activate childObject2 and deactivate childObject1 each time a plant is collected
             childObject1.SetActive(false);
             childObject2.SetActive(true);
 
@@ -219,9 +267,9 @@ public class NPCController : MonoBehaviour
             else
             {
                 grownPlantsCount = CountGrownPlants();
+
                 if (grownPlantsCount >= maxPlantCarryCapacity)
                 {
-                    // Find the next plant to collect
                     FindPlant();
                 }
                 else
@@ -272,7 +320,6 @@ public class NPCController : MonoBehaviour
             childObject1.SetActive(true);
             childObject2.SetActive(false);
 
-            // If there are grown plants, go collect them, otherwise return to the start location
             if (CountGrownPlants() >= maxPlantCarryCapacity)
             {
                 FindPlant();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,18 @@ public class GameManager : MonoBehaviour
     public event Action<int> OnGoldChanged;
     public PlayerBehaviour playerBehaviour;
     public JoystickController joystickController;
+
+    public NPCController selectedNPC;
+
+    public int areaValue = 10;
+    
+    public float moveDuration = 1f;
+
+    public PlantedAreaSpawner firstAreaSpawner;
+    public PlantedAreaSpawner secondAreaSpawner;
+    public GameObject movingObject;
+    public float delayDuration = 2f;
+    public bool isNewLandActive = false;
 
     private void Awake()
     {
@@ -42,7 +55,6 @@ public class GameManager : MonoBehaviour
 
     public Plants GetSelectedPlant()
     {
-        // Ensure the selected plant type is a valid index in the array
         if ((int)selectedPlantType >= 0 && (int)selectedPlantType < allPlants.Length)
         {
             return allPlants[(int)selectedPlantType];
@@ -54,21 +66,60 @@ public class GameManager : MonoBehaviour
 
     public void SwitchChildObject()
     {
-        // PlayerBehaviour nesnesine bir referans alın
         PlayerBehaviour playerBehaviour = GameManager.Instance.playerBehaviour;
 
         // activeChildIndex ve activeHandIndex değerini artırın ve çocuk objelerin sayısına göre modunu alın
         int newChildIndex = (playerBehaviour.activeChildIndex + 1) % playerBehaviour.childObjectsWithAnimators.Length;
 
-        // Karakteri yükseltin
         playerBehaviour.UpgradeCharacter(newChildIndex);
 
-        // Çocuk objesini ve el objesini değiştirin
         playerBehaviour.SwitchChildObject(newChildIndex);
-        playerBehaviour.SwitchHandObject(newChildIndex);  // Hand objesini de değiştirin
+        playerBehaviour.SwitchHandObject(newChildIndex);
 
-        // JoystickController çocuk nesnesini de değiştirin
         joystickController.SwitchChildObject(newChildIndex);
     }
 
+    public void SelectNPC(NPCController npc)
+    {
+        selectedNPC = npc;
+    }
+
+    public void StartSelectedNPC()
+    {
+        if (selectedNPC != null)
+        {
+            selectedNPC.StopCheckingPlants();
+        }
+
+        selectedNPC.StartCollecting();
+    }
+
+    public void MoveCameraAndObject()
+    {
+        // Disable the CamFollow script
+        CamFollow camFollow = Camera.main.GetComponent<CamFollow>();
+        camFollow.enabled = false;
+
+        // Move the camera back
+        Vector3 cameraTargetPosition = Camera.main.transform.position + new Vector3(0, 0, -10); // Modify this to your needs
+
+        Sequence sequence = DOTween.Sequence(); // Create a sequence
+        sequence.Append(Camera.main.transform.DOMove(cameraTargetPosition, moveDuration)); // Append move operation
+        sequence.AppendInterval(2f); // Append a 2 seconds delay after moving
+        sequence.OnComplete(() => camFollow.enabled = true); // Enable the CamFollow script when the sequence completes
+
+        isNewLandActive = true;
+
+        // Move the new object to the left
+        Vector3 objectTargetPosition = movingObject.transform.position + new Vector3(-10, 0, 0); // Modify this to your needs
+        movingObject.transform.DOMove(objectTargetPosition, moveDuration);
+
+        UIManager.Instance.currentPlantedAreaSpawner = secondAreaSpawner;
+        UIManager.Instance.addNewLandButton.gameObject.SetActive(false);
+    }
+
+    public void OnNewLandFullyActive()
+    {
+        isNewLandActive = false;
+    }
 }
