@@ -23,12 +23,8 @@ public class NPCController : MonoBehaviour
 
     //public Animator animator;
 
-    // Child objects
-    public GameObject childObject1;
-    public GameObject childObject2;
-
-    public Animator childAnimator1;
-    public Animator childAnimator2;
+    public GameObject[] childObjects;
+    public Animator[] childAnimators;
 
     public GameObject npcUiElement;
     public TextMeshProUGUI speedText;
@@ -49,22 +45,26 @@ public class NPCController : MonoBehaviour
 
         //animator = GetComponent<Animator>();
 
-        childObject1.SetActive(true);
-        childObject2.SetActive(false);
-
-        childAnimator1 = childObject1.GetComponent<Animator>();
-        childAnimator2 = childObject2.GetComponent<Animator>();
+        for (int i = 0; i < childObjects.Length; i++)
+        {
+            childObjects[i].SetActive(i == 0); // Sadece ilk objeyi etkinleştir
+            childAnimators[i] = childObjects[i].GetComponent<Animator>();
+        }
 
         npcUiElement.SetActive(false);
 
         speedText.text = agent.speed.ToString();
 
+        NPCCC();
+    }
+
+    public void NPCCC()
+    {
         startCollectingButton.onClick.AddListener(() =>
         {
             GameManager.Instance.SelectNPC(this);
             GameManager.Instance.StartSelectedNPC();
         });
-
     }
 
     public void StartCollecting()
@@ -256,14 +256,19 @@ public class NPCController : MonoBehaviour
             plantController.isCollected = true;
             plantController.isGrown = false;
 
-            childObject1.SetActive(false);
-            childObject2.SetActive(true);
+            carriedPlants.Add(plantController.plants);
+
+            for (int i = 0; i < childObjects.Length; i++)
+            {
+                childObjects[i].SetActive(i == plantController.plants.childIndex);
+            }
 
             if (currentPlantCarryCount >= maxPlantCarryCapacity)
             {
                 isCollecting = false;
                 isSelling = true;
             }
+
             else
             {
                 grownPlantsCount = CountGrownPlants();
@@ -317,8 +322,10 @@ public class NPCController : MonoBehaviour
 
             isSelling = false;
 
-            childObject1.SetActive(true);
-            childObject2.SetActive(false);
+            for (int i = 0; i < childObjects.Length; i++)
+            {
+                childObjects[i].SetActive(i == 0); // Sadece ilk objeyi etkinleştir
+            }
 
             if (CountGrownPlants() >= maxPlantCarryCapacity)
             {
@@ -330,5 +337,4 @@ public class NPCController : MonoBehaviour
             }
         }
     }
-
 }

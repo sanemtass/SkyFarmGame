@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         camFollow.enabled = false;
 
         // Move the camera back
-        Vector3 cameraTargetPosition = Camera.main.transform.position + new Vector3(0, 0, -10); // Modify this to your needs
+        Vector3 cameraTargetPosition = Camera.main.transform.position + new Vector3(30, 20, -50); // Modify this to your needs
 
         Sequence sequence = DOTween.Sequence(); // Create a sequence
         sequence.Append(Camera.main.transform.DOMove(cameraTargetPosition, moveDuration)); // Append move operation

@@ -10,6 +10,7 @@ TagManager:
   - Cube
   - PlantedArea
   - Trigger
+  - Tree
   layers:
   - Default
   - TransparentFX

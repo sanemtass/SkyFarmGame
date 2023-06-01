@@ -24,14 +24,132 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|Armature|Armature|Armature|Armature|idle
+      takeName: Armature|Armature|Armature|Armature|Armature|idle
+      internalID: 2303113150034500511
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "Armature|Armature|Armature|Armature|Armature|kollar yukarda duru\u015F"
+      takeName: "Armature|Armature|Armature|Armature|Armature|kollar yukarda duru\u015F"
+      internalID: -7487404921279590158
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "Armature|Armature|Armature|Armature|Armature|kollar yukarda duru\u015F
+        harek"
+      takeName: "Armature|Armature|Armature|Armature|Armature|kollar yukarda duru\u015F
+        harek"
+      internalID: -415412307421568684
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "Armature|Armature|Armature|Armature|Armature|kollar yukarda y\xFCr\xFCme"
+      takeName: "Armature|Armature|Armature|Armature|Armature|kollar yukarda y\xFCr\xFCme"
+      internalID: 6682798542918090422
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -80,7 +198,251 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: golem kutu2(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Rig
+      parentName: golem kutu2(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000005338507, y: 0.000000053385087, z: 0.7071069, w: 0.70710665}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigLArmPalmGizmo
+      parentName: golem kutu2(Clone)
+      position: {x: -0.830903, y: 0.42452678, z: 0.001696015}
+      rotation: {x: 0.7073581, y: 0.0020627363, z: -0.70684934, w: 0.0020628548}
+      scale: {x: 0.0000010000006, y: 1, z: 1}
+    - name: RigRArmPalmGizmo
+      parentName: golem kutu2(Clone)
+      position: {x: 0.83090216, y: 0.42452607, z: 0.0016948453}
+      rotation: {x: 0.70705545, y: -0.0018104607, z: 0.7071535, w: 0.0018107506}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigLArm2Gizmo
+      parentName: golem kutu2(Clone)
+      position: {x: -0.83295393, y: 0.7493058, z: -0.0030137163}
+      rotation: {x: 0.18824281, y: 0.0077147163, z: 0.9820907, w: -0.0017357816}
+      scale: {x: 1, y: 1, z: 0.0000010000012}
+    - name: RigLArm1Gizmo
+      parentName: golem kutu2(Clone)
+      position: {x: -0.6633889, y: 1.1728152, z: 0.0016926076}
+      rotation: {x: -0.092271104, y: 0.012555358, z: 0.97756773, w: 0.18891735}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigRArm2Gizmo
+      parentName: golem kutu2(Clone)
+      position: {x: 0.83295345, y: 0.7493054, z: -0.0030140656}
+      rotation: {x: -0.18837394, y: 0.0077137803, z: 0.98206556, w: 0.0017356966}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigRArm1Gizmo
+      parentName: golem kutu2(Clone)
+      position: {x: 0.6633889, y: 1.172815, z: 0.0016927785}
+      rotation: {x: 0.092274904, y: 0.012555201, z: 0.9775675, w: -0.1889167}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigRibcageGizmo
+      parentName: golem kutu2(Clone)
+      position: {x: 0.000000010653094, y: 1.2033132, z: 0.0016926693}
+      rotation: {x: 0.10392375, y: -0.00000007940284, z: -0.00000003343792, w: 0.9945853}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigHeadGizmo
+      parentName: golem kutu2(Clone)
+      position: {x: 0.000000015205385, y: 1.8489102, z: 0.16942194}
+      rotation: {x: 0.00000008146033, y: -0.0000000754979, z: -0.00000004371138, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigPelvisGizmo
+      parentName: golem kutu2(Clone)
+      position: {x: 0.0000000016597981, y: 0.55409944, z: 0.03797033}
+      rotation: {x: -0.04208964, y: -0.00000007480272, z: -0.000000018091502, w: 0.99911386}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigMouthGizmo
+      parentName: golem kutu2(Clone)
+      position: {x: 0.000000012858371, y: 1.6847785, z: 0.11572853}
+      rotation: {x: 0.83673185, y: -0.00000001889736, z: -0.000000108992836, w: 0.54761285}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Armature
+      parentName: golem kutu2(Clone)
+      position: {x: 0, y: -0.19587308, z: 0}
+      rotation: {x: -0.7071067, y: -0.00000009415695, z: 0.000000094156974, w: 0.7071069}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigPelvis
+      parentName: Armature
+      position: {x: 0.0000000016598114, y: -0.03797035, z: 0.5540994}
+      rotation: {x: 0.7064829, y: -0.029698085, z: -0.70648295, w: 0.029697184}
+      scale: {x: 1.0000001, y: 1, z: 1.0000125}
+    - name: RigSpine1
+      parentName: RigPelvis
+      position: {x: -0.0000000035762786, y: 0.000000009536738, z: -1.7242029e-12}
+      rotation: {x: -0.00000001862645, y: 0.00000015902332, z: 0.06098353, w: 0.9981388}
+      scale: {x: 0.99999976, y: 0.9999999, z: 1.0000002}
+    - name: RigSpine2
+      parentName: RigSpine1
+      position: {x: -0.16516453, y: -0.000000038147242, z: -0.000000018918103}
+      rotation: {x: 0.000000029138539, y: -0.000000028390968, z: -0.041613, w: 0.9991338}
+      scale: {x: 1.0000002, y: 0.9999999, z: 1.0000004}
+    - name: RigSpine3
+      parentName: RigSpine2
+      position: {x: -0.07893419, y: 0.000000012516632, z: -0.000000011262914}
+      rotation: {x: 0.0000009542422, y: -0.0000003107971, z: -0.020449614, w: 0.99979085}
+      scale: {x: 1.0000004, y: 1.0000006, z: 1.0000001}
+    - name: RigSpine4
+      parentName: RigSpine3
+      position: {x: -0.13605852, y: 0.000000025033494, z: 0.000000029359148}
+      rotation: {x: 0.0000016706031, y: 0.00000014100102, z: 0.074315704, w: -0.99723476}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000007}
+    - name: RigRibcage
+      parentName: RigSpine4
+      position: {x: -0.27421468, y: 0.0000000028308602, z: 0.000000048746678}
+      rotation: {x: -0.0000006196254, y: 0.00000015538957, z: 0.07062505, w: -0.997503}
+      scale: {x: 1.0000002, y: 1, z: 1.0000001}
+    - name: RigNeck
+      parentName: RigRibcage
+      position: {x: 0.00000018447639, y: -0.00000020369922, z: 2.3817393e-13}
+      rotation: {x: 0.000000009373649, y: 0.0000001677194, z: -0.022978982, w: 0.999736}
+      scale: {x: 0.99999976, y: 0.9999999, z: 0.99999976}
+    - name: RigHead
+      parentName: RigNeck
+      position: {x: -0.6670296, y: 0.00000019073575, z: 0.00000026176866}
+      rotation: {x: -0.0000000073919404, y: 0.00000019592247, z: 0.12675066, w: 0.99193466}
+      scale: {x: 1, y: 1.0000002, z: 0.9999999}
+    - name: RigMouth
+      parentName: RigHead
+      position: {x: 0.16413212, y: -0.05369347, z: 0.0000000032193384}
+      rotation: {x: 0.0000020080424, y: 0.000000065075156, z: 0.8367319, w: -0.5476129}
+      scale: {x: 0.99999976, y: 1.0000001, z: 1}
+    - name: RigMouth_end
+      parentName: RigMouth
+      position: {x: 0.000000076293915, y: 0.17269132, z: -1.2505552e-14}
+      rotation: {x: -0.000000008741605, y: 0.000000039905395, z: -0.00000017881393,
+        w: 1}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1}
+    - name: RigMouth_end_end
+      parentName: RigMouth_end
+      position: {x: 0.000000016689384, y: 0.17269117, z: 6.252776e-15}
+      rotation: {x: 0.000000008741607, y: -0.000000039905352, z: 0.000000119209176,
+        w: 1}
+      scale: {x: 1.0000001, y: 1.0000006, z: 1.0000002}
+    - name: RigMouth_end_end_end
+      parentName: RigMouth_end_end
+      position: {x: -0, y: 0.17269117, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigLArm1
+      parentName: RigRibcage
+      position: {x: 0.029839551, y: 0.006305293, z: 0.6633641}
+      rotation: {x: -0.13505666, y: 0.7886352, z: 0.1343668, w: 0.58460236}
+      scale: {x: 0.99999964, y: 1.0000001, z: 1}
+    - name: RigLArm2
+      parentName: RigLArm1
+      position: {x: -0.45621547, y: -0.0000009965896, z: 0.000006262064}
+      rotation: {x: 0.27476475, y: -0.11744358, z: 0.009493995, w: 0.9542648}
+      scale: {x: 1.0000029, y: 1.0000027, z: 0.99999523}
+    - name: RigLArmPalm
+      parentName: RigLArm2
+      position: {x: -0.32481962, y: 0.0000010967254, z: 0.0000029087066}
+      rotation: {x: -0.827653, y: -0.004250213, z: 0.0058785705, w: 0.5611934}
+      scale: {x: 0.99999857, y: 0.99999595, z: 1.0000051}
+    - name: RigLArmPalm_end
+      parentName: RigLArmPalm
+      position: {x: -0.000000025629996, y: 0.32481188, z: -0.0000000555336}
+      rotation: {x: 0.000000029802312, y: -0.00000003236345, z: -0.00000004959291,
+        w: 1}
+      scale: {x: 1, y: 1.0000005, z: 1.0000002}
+    - name: RigLArmPalm_end_end
+      parentName: RigLArmPalm_end
+      position: {x: 0.000000014901161, y: 0.32481575, z: -0.0000000019883737}
+      rotation: {x: -0, y: -0.000000035390244, z: -0.000000012107187, w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 0.99999976}
+    - name: RigLArmPalm_end_end_end
+      parentName: RigLArmPalm_end_end
+      position: {x: -0, y: 0.3248199, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigRArm1
+      parentName: RigRibcage
+      position: {x: 0.029839192, y: 0.0063038412, z: -0.6633644}
+      rotation: {x: -0.13505642, y: 0.78863376, z: -0.13436753, w: -0.58460397}
+      scale: {x: 1.0000002, y: 1.0000006, z: 1.0000007}
+    - name: RigRArm2
+      parentName: RigRArm1
+      position: {x: -0.45621577, y: -0.0000021791457, z: -0.0000071322916}
+      rotation: {x: -0.2748051, y: 0.117443696, z: 0.009497532, w: 0.95425314}
+      scale: {x: 1.0000036, y: 1.0000006, z: 0.9999957}
+    - name: RigRArmPalm
+      parentName: RigRArm2
+      position: {x: -0.32482052, y: -0.00000020980835, z: -0.0000040245054}
+      rotation: {x: 0.82759774, y: 0.0042494982, z: 0.005879216, w: 0.5612749}
+      scale: {x: 1.0000008, y: 0.99999714, z: 1.0000036}
+    - name: RigRArmPalm_end
+      parentName: RigRArmPalm
+      position: {x: 0.00000006318092, y: 0.32481182, z: -0.000000037752034}
+      rotation: {x: 0.000000029802315, y: 0.00000010244546, z: -0.0000000197906, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: RigRArmPalm_end_end
+      parentName: RigRArmPalm_end
+      position: {x: -0.000000042915342, y: 0.3248159, z: 0.000000048613582}
+      rotation: {x: -0, y: -0, z: 4.996009e-16, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 1.0000002}
+    - name: RigRArmPalm_end_end_end
+      parentName: RigRArmPalm_end_end
+      position: {x: -0, y: 0.32482004, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigTail1
+      parentName: RigPelvis
+      position: {x: -0.0000000035762786, y: 0.000000009536738, z: -1.7250556e-12}
+      rotation: {x: -0, y: -0.00000021606684, z: -0.9999989, w: 0.0015178658}
+      scale: {x: 1, y: 1.0000001, z: 1.0000004}
+    - name: RigTail2
+      parentName: RigTail1
+      position: {x: -0.13793282, y: -0.000000007152642, z: 0.000000006937679}
+      rotation: {x: -0.00000006386331, y: -0.00000035911327, z: 0.1306094, w: -0.9914339}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1.0000001}
+    - name: RigTail3
+      parentName: RigTail2
+      position: {x: -0.18238667, y: 0.00000007748616, z: -0.00000010870669}
+      rotation: {x: 0.96335703, y: 0.23891321, z: -0.008306019, w: 0.12163322}
+      scale: {x: 0.9999995, y: 0.9999995, z: 0.99999964}
+    - name: RigTail3_end
+      parentName: RigTail3
+      position: {x: -0.00000004768385, y: 0.18238688, z: -4.5474732e-14}
+      rotation: {x: 0.00000006645688, y: 0.00000010449132, z: -0.00000011920925, w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
+    - name: RigTail3_end_end
+      parentName: RigTail3_end
+      position: {x: -0.000000019073747, y: 0.18238683, z: 1.8189894e-14}
+      rotation: {x: -0.00000006645688, y: -0.00000010449132, z: 0.000000119209254,
+        w: 1}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: RigTail3_end_end_end
+      parentName: RigTail3_end_end
+      position: {x: -0, y: 0.18238682, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Golem Earth
+      parentName: golem kutu2(Clone)
+      position: {x: 1.2429864e-14, y: 0.000000019073433, z: 0.000000023841944}
+      rotation: {x: -0.000000075497894, y: 1, z: 0.00000015055397, w: -9.672002e-15}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Armature.001
+      parentName: golem kutu2(Clone)
+      position: {x: -0.035131793, y: 0.79859656, z: 0.94184655}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 111.86835, y: 111.86835, z: 111.86835}
+    - name: kemik1
+      parentName: Armature.001
+      position: {x: 3.352761e-10, y: 0, z: -5.9604643e-10}
+      rotation: {x: 0.7071068, y: 1.2512645e-10, z: 1.1120346e-11, w: 0.7071067}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1}
+    - name: kasa.002
+      parentName: kemik1
+      position: {x: 0.0005268248, y: 0.0007232767, z: 0.00016180336}
+      rotation: {x: -0.5, y: -0.49999997, z: -0.5, w: 0.5}
+      scale: {x: 0.000020031719, y: 0.00009043546, z: 0.000023374936}
+    - name: kemik1_end
+      parentName: kemik1
+      position: {x: -0, y: 0.01, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -91,13 +453,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0

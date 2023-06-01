@@ -19,3 +19,4 @@ MonoBehaviour:
     type: 3}
   growthTime: 11
   value: 30
+  childIndex: 3

@@ -88,22 +88,24 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("Cube"))
-        {
-            CuttableTree cuttableTree = other.GetComponent<CuttableTree>();
-            Debug.Log("A");
-
-            if (cuttableTree != null && !cuttableTree.isCut)
-            {
-                Debug.Log("B");
-                cuttableTree.Cut();
-            }
-        }
-
         if (other.CompareTag("SalesArea"))
         {
             UsePlant();
             Debug.Log("GORDUN MU");
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Tree"))
+        {
+            foreach (Animator animator in animators)
+            {
+                if (animator.gameObject.activeInHierarchy)
+                {
+                    animator.Play("CutTree");
+                }
+            }
         }
     }
 
@@ -114,6 +116,17 @@ public class PlayerBehaviour : MonoBehaviour
             if (animators[activeChildIndex] != null)
             {
                 animators[activeChildIndex].SetBool("IsPlanting", false);
+            }
+        }
+
+        if (other.CompareTag("Tree"))
+        {
+            foreach (Animator animator in animators)
+            {
+                if (animator.gameObject.activeInHierarchy)
+                {
+                    animator.Play("Idle"); // Burada "Idle" animasyon adınız olmalı
+                }
             }
         }
     }

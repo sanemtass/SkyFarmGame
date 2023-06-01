@@ -18,5 +18,6 @@ public class Plants : ScriptableObject
     public GameObject newPlantPrefab; // Bitkinin toplandığında görünümü
     public float growthTime;
     public int value; // Öğenin fiyatı
+    public int childIndex;
 }
 
