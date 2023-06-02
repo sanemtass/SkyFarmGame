@@ -8,6 +8,14 @@ public class PlantedAreaController : MonoBehaviour
     [SerializeField] private bool hasPlant = false;
     [SerializeField] private PlayerBehaviour playerBehaviour;
 
+    public AudioClip plantSound; // Bitki eklenince çalacak ses dosyası (Unity editöründen ayarlanacak)
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>(); // AudioSource bileşenini alın (bu bileşenin objeye ekli olduğundan emin olun)
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -33,6 +41,11 @@ public class PlantedAreaController : MonoBehaviour
 
                 // Bitki ekildiğini belirt
                 hasPlant = true;
+
+                if (audioSource != null && plantSound != null)
+                {
+                    audioSource.PlayOneShot(plantSound);
+                }
             }
         }
     }

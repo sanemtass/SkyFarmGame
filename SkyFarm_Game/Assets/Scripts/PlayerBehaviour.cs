@@ -17,6 +17,11 @@ public class PlayerBehaviour : MonoBehaviour
     public int activeHandIndex = 0;
     public float speed = 400f;
     public int maxPlantCapacity = 3;
+    public GameObject ax;
+    private bool isStartingAnimationFinished = false;
+
+    public AudioClip pickUpSound, salesSound, childSwitchSound; // Bitki toplandığında çalacak ses dosyası (Unity editöründen ayarlanacak)
+    private AudioSource audioSource;
 
     private PlayerController playerController;
 
@@ -24,6 +29,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         animators = new Animator[childObjectsWithAnimators.Length];
         for (int i = 0; i < childObjectsWithAnimators.Length; i++)
         {
@@ -54,7 +60,35 @@ public class PlayerBehaviour : MonoBehaviour
         plantStack = new Stack<Plants>(); // Plants Stack'ı başlat
         plantObjects = new Stack<GameObject>(); // GameObject Stack'ı başlat
         playerController = GetComponent<PlayerController>();
+
+        PlayAnimation("Hand");
     }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) // Mouse'un sol tuşuna basılınca
+        {
+            // Kameranın istediğiniz pozisyona döneceği kod
+            CamFollow camFollow = Camera.main.GetComponent<CamFollow>();
+            camFollow.StartFollowing();
+
+            // Idle animasyonuna dön
+            if (animators[activeChildIndex] != null)
+            {
+                animators[activeChildIndex].Play("Idle");
+            }
+        }
+    }
+
+    //private IEnumerator PlayStartingAnimation(string animationName)
+    //{
+    //    animators[activeChildIndex].Play("Hand");
+
+    //    // Wait for the length of the animation, replace "AnimationLength" with your actual animation length
+    //    yield return new WaitForSeconds(5f);
+
+    //    isStartingAnimationFinished = true;
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -84,6 +118,12 @@ public class PlayerBehaviour : MonoBehaviour
                 plantObjects.Push(newPlant);
 
                 plantController.isCollected = true;
+
+                if (audioSource != null && pickUpSound != null)
+                {
+                    audioSource.PlayOneShot(pickUpSound);
+                }
+
                 UpdateAnimatorState();
             }
         }
@@ -91,6 +131,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (other.CompareTag("SalesArea"))
         {
             UsePlant();
+
             Debug.Log("GORDUN MU");
         }
     }
@@ -104,6 +145,7 @@ public class PlayerBehaviour : MonoBehaviour
                 if (animator.gameObject.activeInHierarchy)
                 {
                     animator.Play("CutTree");
+                    ax.SetActive(true);
                 }
             }
         }
@@ -126,6 +168,7 @@ public class PlayerBehaviour : MonoBehaviour
                 if (animator.gameObject.activeInHierarchy)
                 {
                     animator.Play("Idle"); // Burada "Idle" animasyon adınız olmalı
+                    ax.SetActive(false);
                 }
             }
         }
@@ -154,12 +197,17 @@ public class PlayerBehaviour : MonoBehaviour
         float jumpPower = 2f; // Bitkinin zıplama gücü
         int numJumps = 1; // Bitkinin kaç kere zıplayacağı
 
+        plantObject.transform.DOLookAt(salesArea.transform.position, journeyTime);
         plantObject.transform.DOJump(endPosition, jumpPower, numJumps, journeyTime)
-        .OnComplete(() =>
-        {
-            Destroy(plantObject);
-            UpdateAnimatorState();
-        });
+            .OnComplete(() =>
+            {
+                Destroy(plantObject);
+                UpdateAnimatorState();
+                if (audioSource != null && pickUpSound != null)
+                {
+                    audioSource.PlayOneShot(salesSound);
+                }
+            });
     }
 
     private void UpdateAnimatorState()
@@ -206,6 +254,11 @@ public class PlayerBehaviour : MonoBehaviour
             childObjectsWithAnimators[newChildIndex].SetActive(true); // Yeni çocuğu aç
             animator.Rebind(); // Yeni çocuğun animatörünü resetle ve başlat
             activeChildIndex = newChildIndex; // Aktif çocuğun indexini güncelle
+
+            if (audioSource != null && childSwitchSound != null)
+            {
+                audioSource.PlayOneShot(childSwitchSound);
+            }
 
             SwitchHandObject(activeChildIndex); // Elin indexini güncelle
         }

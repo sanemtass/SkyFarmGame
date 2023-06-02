@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     public Button addNewLandButton;
     public PlantedAreaSpawner currentPlantedAreaSpawner;
 
+    private int levelUpButtonClickCount = 0;
+
     private void Awake()
     {
         Instance = this;
@@ -32,6 +34,20 @@ public class UIManager : MonoBehaviour
         addNewLandButton.onClick.AddListener(GameManager.Instance.MoveCameraAndObject);
 
         currentPlantedAreaSpawner = GameManager.Instance.firstAreaSpawner;
+
+        switchButton.onClick.AddListener(LevelUpButtonClick);
+
+    }
+
+    private void LevelUpButtonClick()
+    {
+        levelUpButtonClickCount++; // Increment counter
+
+        // If button clicked 3 times, disable it
+        if (levelUpButtonClickCount >= 2)
+        {
+            switchButton.interactable = false;
+        }
     }
 
     private void CheckGoldValueForArea(int goldAmount)

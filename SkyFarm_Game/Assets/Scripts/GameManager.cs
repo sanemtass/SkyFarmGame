@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     public float delayDuration = 2f;
     public bool isNewLandActive = false;
 
+    public bool isNPCSelected = false;
+
+
     private void Awake()
     {
         Instance = this;
@@ -81,7 +84,14 @@ public class GameManager : MonoBehaviour
 
     public void SelectNPC(NPCController npc)
     {
+        // Eğer zaten bir NPC seçiliyse ve aynı NPC'ye tıklanmışsa, seçim yapma
+        if (isNPCSelected && selectedNPC == npc) return;
+
+        // Diğer durumda, NPC'yi seç ve seçim durumunu güncelle
         selectedNPC = npc;
+
+        // Eğer başka bir NPC seçildiyse, seçim durumunu güncelle
+        if (selectedNPC != npc) isNPCSelected = true;
     }
 
     public void StartSelectedNPC()
@@ -92,6 +102,9 @@ public class GameManager : MonoBehaviour
         }
 
         selectedNPC.StartCollecting();
+
+        // NPC'yi başlattıktan sonra, NPC'nin seçim durumunu güncelle
+        isNPCSelected = false;
     }
 
     public void MoveCameraAndObject()

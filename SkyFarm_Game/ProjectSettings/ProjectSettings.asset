@@ -781,6 +781,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
+    Android: DISTANT_LANDS;COZY_WEATHER
     Standalone: DISTANT_LANDS;COZY_WEATHER
   additionalCompilerArguments: {}
   platformArchitecture: {}
