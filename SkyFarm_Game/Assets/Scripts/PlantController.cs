@@ -13,6 +13,7 @@ public class PlantController : MonoBehaviour
     {
         // Büyüme sürecini başlat
         StartCoroutine(Grow());
+        isGrown = true;
     }
 
     private IEnumerator Grow()
@@ -23,6 +24,7 @@ public class PlantController : MonoBehaviour
         // Bitki büyüdükten sonra yapılacak işlemler (örneğin, bitkinin görünümünü değiştirmek)
 
         Debug.Log("Plant has grown.");
-        isGrown = true;
+        
+        
     }
 }

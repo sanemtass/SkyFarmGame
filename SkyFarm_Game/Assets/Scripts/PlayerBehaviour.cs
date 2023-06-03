@@ -25,6 +25,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private PlayerController playerController;
 
+    public ParticleSystem coinParticle, levelUpParticle;
+
     [SerializeField] private Stack<GameObject> plantObjects; // Bitkilerin GameObject versiyonlarını tutmak için bir Stack oluşturduk
 
     private void Awake()
@@ -207,6 +209,7 @@ public class PlayerBehaviour : MonoBehaviour
                 {
                     audioSource.PlayOneShot(salesSound);
                 }
+                coinParticle.Play();
             });
     }
 
@@ -259,6 +262,8 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 audioSource.PlayOneShot(childSwitchSound);
             }
+
+            levelUpParticle.Play();
 
             SwitchHandObject(activeChildIndex); // Elin indexini güncelle
         }

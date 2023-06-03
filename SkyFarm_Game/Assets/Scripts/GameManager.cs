@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public float delayDuration = 2f;
     public bool isNewLandActive = false;
 
-    public bool isNPCSelected = false;
+    public bool isNPCEngaged = false;
 
 
     private void Awake()
@@ -84,14 +84,11 @@ public class GameManager : MonoBehaviour
 
     public void SelectNPC(NPCController npc)
     {
-        // Eğer zaten bir NPC seçiliyse ve aynı NPC'ye tıklanmışsa, seçim yapma
-        if (isNPCSelected && selectedNPC == npc) return;
+        if (isNPCEngaged) return;
 
-        // Diğer durumda, NPC'yi seç ve seçim durumunu güncelle
+        // Otherwise, select the NPC and update the engaged state
         selectedNPC = npc;
-
-        // Eğer başka bir NPC seçildiyse, seçim durumunu güncelle
-        if (selectedNPC != npc) isNPCSelected = true;
+        isNPCEngaged = true;
     }
 
     public void StartSelectedNPC()
@@ -103,8 +100,8 @@ public class GameManager : MonoBehaviour
 
         selectedNPC.StartCollecting();
 
-        // NPC'yi başlattıktan sonra, NPC'nin seçim durumunu güncelle
-        isNPCSelected = false;
+        // After starting the NPC, update the NPC's engaged state
+        isNPCEngaged = true;
     }
 
     public void MoveCameraAndObject()
@@ -122,6 +119,7 @@ public class GameManager : MonoBehaviour
         sequence.OnComplete(() => camFollow.enabled = true); // Enable the CamFollow script when the sequence completes
 
         isNewLandActive = true;
+        isNPCEngaged = false;
 
         // Move the new object to the left
         Vector3 objectTargetPosition = movingObject.transform.position + new Vector3(-10, 0, 0); // Modify this to your needs

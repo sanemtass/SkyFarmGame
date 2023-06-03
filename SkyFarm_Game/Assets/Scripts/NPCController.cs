@@ -62,8 +62,12 @@ public class NPCController : MonoBehaviour
     {
         startCollectingButton.onClick.AddListener(() =>
         {
-            GameManager.Instance.SelectNPC(this);
-            GameManager.Instance.StartSelectedNPC();
+            if (!GameManager.Instance.isNPCEngaged)
+            {
+                GameManager.Instance.SelectNPC(this);
+                GameManager.Instance.StartSelectedNPC();
+                GameManager.Instance.isNPCEngaged = true;
+            }
         });
     }
 
@@ -192,7 +196,7 @@ public class NPCController : MonoBehaviour
             SellPlant();
         }
 
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !GameManager.Instance.isNPCEngaged)
         {
             // Show the UI element
             npcUiElement.SetActive(true);
@@ -335,6 +339,8 @@ public class NPCController : MonoBehaviour
             {
                 agent.SetDestination(startLocation.position);
             }
+
+            //GameManager.Instance.isNPCEngaged = false; // NPC'nin işlemi tamamlandı, başka NPC seçilebilir
         }
     }
 }

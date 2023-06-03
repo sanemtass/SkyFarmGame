@@ -10,6 +10,7 @@ public class PlantedAreaController : MonoBehaviour
 
     public AudioClip plantSound; // Bitki eklenince çalacak ses dosyası (Unity editöründen ayarlanacak)
     private AudioSource audioSource;
+    private bool isGrowing = false;
 
     private void Awake()
     {
@@ -18,7 +19,7 @@ public class PlantedAreaController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isGrowing)
         {
             // Eğer zaten bir bitki ekilmişse, daha fazla bitki eklemeyi engelle
             if (hasPlant)
@@ -27,14 +28,27 @@ public class PlantedAreaController : MonoBehaviour
                 return;
             }
 
-            // Seçili bitkinin Plants ScriptableObject'ını al
             Plants selectedPlant = GameManager.Instance.GetSelectedPlant();
 
+            StartCoroutine(GrowthDelay(selectedPlant));
+        }
+    }
+
+    private IEnumerator GrowthDelay(Plants selectedPlant)
+    {
+        isGrowing = true;
+
+        yield return new WaitForSeconds(selectedPlant.growthTime);
+
+        // Seçili bitkinin Plants ScriptableObject'ını al
+        for (int i = 0; i < 1; i++)
+        {
             if (selectedPlant != null)
             {
                 // Seçili bitkinin prefab'ını al ve bu konumda oluştur
                 GameObject plantPrefab = selectedPlant.plant;
                 GameObject newPlant = Instantiate(plantPrefab, transform.position, Quaternion.identity);
+                Debug.Log("NEDEN");
 
                 // Oluşturulan bitkiyi PlantedAreaController'ın alt nesnesi olarak ayarla
                 newPlant.transform.SetParent(transform);
@@ -48,6 +62,8 @@ public class PlantedAreaController : MonoBehaviour
                 }
             }
         }
+        
+        isGrowing = false;
     }
 
     private void OnTriggerStay(Collider other)
