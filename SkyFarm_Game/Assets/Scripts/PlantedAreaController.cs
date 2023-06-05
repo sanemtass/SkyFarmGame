@@ -32,6 +32,15 @@ public class PlantedAreaController : MonoBehaviour
 
             StartCoroutine(GrowthDelay(selectedPlant));
         }
+
+        if (other.CompareTag("Player"))
+        {
+            PlayerBehaviour playerBehaviour = other.GetComponent<PlayerBehaviour>();
+            if (playerBehaviour != null)
+            {
+                playerBehaviour.PlayPlantingAnimation();
+            }
+        }
     }
 
     private IEnumerator GrowthDelay(Plants selectedPlant)
@@ -86,15 +95,6 @@ public class PlantedAreaController : MonoBehaviour
         else if (plantCount == 0)
         {
             hasPlant = false;
-        }
-
-        if (other.CompareTag("Player"))
-        {
-            PlayerBehaviour playerBehaviour = other.GetComponent<PlayerBehaviour>();
-            if (playerBehaviour != null)
-            {
-                playerBehaviour.PlayPlantingAnimation();
-            }
         }
     }
 }

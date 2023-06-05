@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbaac5066a7426dac83e576f6a9dcf4, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
-  count: 90625
+  count: 84415

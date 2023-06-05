@@ -7,6 +7,14 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.homagames.debug-console": {
+      "version": "file:com.homagames.debug-console",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.textmeshpro": "1.0.0"
+      }
+    },
     "com.unity.burst": {
       "version": "1.8.2",
       "depth": 1,

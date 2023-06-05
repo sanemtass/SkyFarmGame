@@ -17,7 +17,7 @@ public class PlayerBehaviour : MonoBehaviour
     public int activeHandIndex = 0;
     public float speed = 400f;
     public int maxPlantCapacity = 3;
-    public GameObject ax;
+    public GameObject ax, tree;
     private bool isStartingAnimationFinished = false;
 
     public AudioClip pickUpSound, salesSound, childSwitchSound; // Bitki toplandığında çalacak ses dosyası (Unity editöründen ayarlanacak)
@@ -170,10 +170,17 @@ public class PlayerBehaviour : MonoBehaviour
                 if (animator.gameObject.activeInHierarchy)
                 {
                     animator.Play("Idle"); // Burada "Idle" animasyon adınız olmalı
-                    ax.SetActive(false);
+                    
                 }
             }
+            Invoke(nameof(TreeFalse), 2f);
         }
+    }
+
+    private void TreeFalse()
+    {
+        tree.SetActive(false);
+        ax.SetActive(false);
     }
 
     public void UsePlant()
@@ -189,6 +196,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Debug.Log("No plants in the stack!"); // Eğer stack boşsa, log'a yaz
         }
+
         UpdateAnimatorState();
     }
 
@@ -217,6 +225,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (animators[activeChildIndex] != null)
         {
+            Debug.Log("ANimasyon calisio mu");
             animators[activeChildIndex].SetInteger("PlantCount", plantObjects.Count);
             if (plantObjects.Count > 0)
             {
@@ -299,6 +308,16 @@ public class PlayerBehaviour : MonoBehaviour
         if (animators[activeChildIndex] != null)
         {
             animators[activeChildIndex].SetBool("IsPlanting", true);
+            Invoke(nameof(IdleToPlanting), 1.5f);
+        }
+    }
+
+    private void IdleToPlanting()
+    {
+        if (animators[activeChildIndex] != null)
+        {
+            animators[activeChildIndex].SetBool("IsPlanting", false);
+            animators[activeChildIndex].Play("Idle");
         }
     }
 
