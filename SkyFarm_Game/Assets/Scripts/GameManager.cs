@@ -71,7 +71,6 @@ public class GameManager : MonoBehaviour
     {
         PlayerBehaviour playerBehaviour = GameManager.Instance.playerBehaviour;
 
-        // activeChildIndex ve activeHandIndex değerini artırın ve çocuk objelerin sayısına göre modunu alın
         int newChildIndex = (playerBehaviour.activeChildIndex + 1) % playerBehaviour.childObjectsWithAnimators.Length;
 
         playerBehaviour.UpgradeCharacter(newChildIndex);
@@ -86,7 +85,6 @@ public class GameManager : MonoBehaviour
     {
         if (isNPCEngaged) return;
 
-        // Otherwise, select the NPC and update the engaged state
         selectedNPC = npc;
         isNPCEngaged = true;
     }
@@ -100,29 +98,25 @@ public class GameManager : MonoBehaviour
 
         selectedNPC.StartCollecting();
 
-        // After starting the NPC, update the NPC's engaged state
         isNPCEngaged = true;
     }
 
     public void MoveCameraAndObject()
     {
-        // Disable the CamFollow script
         CamFollow camFollow = Camera.main.GetComponent<CamFollow>();
         camFollow.enabled = false;
 
-        // Move the camera back
-        Vector3 cameraTargetPosition = Camera.main.transform.position + new Vector3(30, 20, -50); // Modify this to your needs
+        Vector3 cameraTargetPosition = Camera.main.transform.position + new Vector3(30, 20, -50);
 
-        Sequence sequence = DOTween.Sequence(); // Create a sequence
-        sequence.Append(Camera.main.transform.DOMove(cameraTargetPosition, moveDuration)); // Append move operation
-        sequence.AppendInterval(2f); // Append a 2 seconds delay after moving
-        sequence.OnComplete(() => camFollow.enabled = true); // Enable the CamFollow script when the sequence completes
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(Camera.main.transform.DOMove(cameraTargetPosition, moveDuration));
+        sequence.AppendInterval(2f);
+        sequence.OnComplete(() => camFollow.enabled = true);
 
         isNewLandActive = true;
         isNPCEngaged = false;
 
-        // Move the new object to the left
-        Vector3 objectTargetPosition = movingObject.transform.position + new Vector3(-10, 0, 0); // Modify this to your needs
+        Vector3 objectTargetPosition = movingObject.transform.position + new Vector3(-10, 0, 0);
         movingObject.transform.DOMove(objectTargetPosition, moveDuration);
 
         UIManager.Instance.currentPlantedAreaSpawner = secondAreaSpawner;

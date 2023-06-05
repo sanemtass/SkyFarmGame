@@ -21,8 +21,6 @@ public class NPCController : MonoBehaviour
 
     private Coroutine checkPlantsCoroutine;
 
-    //public Animator animator;
-
     public GameObject[] childObjects;
     public Animator[] childAnimators;
 
@@ -38,16 +36,13 @@ public class NPCController : MonoBehaviour
         {
             Debug.LogError("No NavMeshAgent attached to " + gameObject.name);
         }
-        //maxPlantCarryCapacity = Random.Range(2, 5);
+
         agent.speed = Random.Range(3, 6);
         Debug.Log(maxPlantCarryCapacity);
-        //startLocation = transform.position;
-
-        //animator = GetComponent<Animator>();
 
         for (int i = 0; i < childObjects.Length; i++)
         {
-            childObjects[i].SetActive(i == 0); // Sadece ilk objeyi etkinleştir
+            childObjects[i].SetActive(i == 0);
             childAnimators[i] = childObjects[i].GetComponent<Animator>();
         }
 
@@ -173,7 +168,6 @@ public class NPCController : MonoBehaviour
 
         if (!isCollecting && !isSelling && Vector3.Distance(transform.position, startLocation.position) < agent.stoppingDistance)
         {
-            // Set the rotation
             transform.rotation = Quaternion.Euler(0, 0, 0);
             Debug.Log("NPC is rotating");
         }
@@ -198,7 +192,6 @@ public class NPCController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player") && !GameManager.Instance.isNPCEngaged)
         {
-            // Show the UI element
             npcUiElement.SetActive(true);
         }
     }
@@ -340,7 +333,7 @@ public class NPCController : MonoBehaviour
                 agent.SetDestination(startLocation.position);
             }
 
-            //GameManager.Instance.isNPCEngaged = false; // NPC'nin işlemi tamamlandı, başka NPC seçilebilir
+            //GameManager.Instance.isNPCEngaged = false; //başka NPC seçilebilir
         }
     }
 }

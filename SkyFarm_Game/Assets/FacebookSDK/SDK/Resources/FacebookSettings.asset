@@ -16,9 +16,9 @@ MonoBehaviour:
   clientTokens:
   - 
   appIds:
-  - 0
+  - 209191165290844
   appLabels:
-  - App Name
+  - SkyFarm
   cookie: 1
   logging: 1
   status: 1

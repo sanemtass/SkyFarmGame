@@ -5,29 +5,29 @@ using DG.Tweening;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    private Stack<Plants> plantStack; // Bitkileri tutmak için bir Stack oluşturduk
-    private float plantHeight = 1f; // Her bitkinin yüksekliği (bu değeri bitkinin gerçek yüksekliğine göre ayarlayabilirsiniz)
-    public float distanceFromPlayer = 1.0f; // Player'dan bitkinin uzaklığı
+    private Stack<Plants> plantStack;
+    private float plantHeight = 1f;
+    public float distanceFromPlayer = 1.0f;
     public Transform salesArea;
-    public GameObject handObject; // Hand objesine bir referans ekleyin
-    public GameObject[] childObjectsWithAnimators; // Unity inspector'da ayarlayın
+    public GameObject handObject;
+    public GameObject[] childObjectsWithAnimators;
     public Animator[] animators;
     public int activeChildIndex = 0;
-    public GameObject[] handObjects; // Elin objelerine bir dizi referansı ekleyin
+    public GameObject[] handObjects;
     public int activeHandIndex = 0;
     public float speed = 400f;
     public int maxPlantCapacity = 3;
     public GameObject ax, tree;
     private bool isStartingAnimationFinished = false;
 
-    public AudioClip pickUpSound, salesSound, childSwitchSound; // Bitki toplandığında çalacak ses dosyası (Unity editöründen ayarlanacak)
+    public AudioClip pickUpSound, salesSound, childSwitchSound;
     private AudioSource audioSource;
 
     private PlayerController playerController;
 
     public ParticleSystem coinParticle, levelUpParticle;
 
-    [SerializeField] private Stack<GameObject> plantObjects; // Bitkilerin GameObject versiyonlarını tutmak için bir Stack oluşturduk
+    [SerializeField] private Stack<GameObject> plantObjects;
 
     private void Awake()
     {
@@ -44,12 +44,12 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 if (i == activeHandIndex)
                 {
-                    handObjects[i].SetActive(true);  // Aktif el objesini açın
+                    handObjects[i].SetActive(true);
                     handObject = handObjects[i];
                 }
                 else
                 {
-                    handObjects[i].SetActive(false);  // Diğer el objelerini kapatın
+                    handObjects[i].SetActive(false); 
                 }
             }
         }
@@ -59,8 +59,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Start()
     {
-        plantStack = new Stack<Plants>(); // Plants Stack'ı başlat
-        plantObjects = new Stack<GameObject>(); // GameObject Stack'ı başlat
+        plantStack = new Stack<Plants>();
+        plantObjects = new Stack<GameObject>(); 
         playerController = GetComponent<PlayerController>();
 
         PlayAnimation("Hand");
@@ -68,9 +68,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Mouse'un sol tuşuna basılınca
+        if (Input.GetMouseButtonDown(0))
         {
-            // Kameranın istediğiniz pozisyona döneceği kod
             CamFollow camFollow = Camera.main.GetComponent<CamFollow>();
             camFollow.StartFollowing();
 
@@ -82,27 +81,14 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    //private IEnumerator PlayStartingAnimation(string animationName)
-    //{
-    //    animators[activeChildIndex].Play("Hand");
-
-    //    // Wait for the length of the animation, replace "AnimationLength" with your actual animation length
-    //    yield return new WaitForSeconds(5f);
-
-    //    isStartingAnimationFinished = true;
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Plant"))
         {
-            // Bitki üzerindeki PlantController scriptine eriş
             PlantController plantController = other.GetComponent<PlantController>();
 
-            // Eğer bitki üzerinde PlantController ve PlantBehaviour scripti var, bitki büyümüş ve henüz toplanmamışsa
             if (plantController != null && plantController.isGrown == true && plantController.isCollected == false)
             {
-                // Eğer stack'in boyutu zaten maxPlantCapacity veya daha büyükse, yeni bitki eklemeyi engelle
                 if (plantStack.Count >= maxPlantCapacity)
                 {
                     Debug.Log("Player can't carry any more plants!");
@@ -111,9 +97,8 @@ public class PlayerBehaviour : MonoBehaviour
 
                 plantStack.Push(plantController.plants);
 
-                Destroy(other.gameObject); // Eski bitkiyi yok et
+                Destroy(other.gameObject);
 
-                // Yeni bitkiyi oluştur ve stack'e ekle
                 GameObject newPlant = Instantiate(plantController.plants.newPlantPrefab, other.transform.position, Quaternion.identity, handObject.transform);
 
                 newPlant.transform.localPosition = Vector3.forward * distanceFromPlayer + Vector3.up * (plantStack.Count - 1) * plantHeight;
@@ -169,7 +154,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 if (animator.gameObject.activeInHierarchy)
                 {
-                    animator.Play("Idle"); // Burada "Idle" animasyon adınız olmalı
+                    animator.Play("Idle");
                     
                 }
             }
@@ -189,12 +174,12 @@ public class PlayerBehaviour : MonoBehaviour
         {
             GameObject plantObject = plantObjects.Pop(); // En son eklenen bitkinin GameObject versiyonunu stack'den çıkar
             Plants plant = plantStack.Pop(); // En son eklenen bitkiyi stack'den çıkar
-            GameManager.Instance.ChangeGold(plant.value); // Altını arttır ve olayı tetikle
-            MoveToSalesArea(plantObject); // Bitkiyi Sales Area'ya yolla
+            GameManager.Instance.ChangeGold(plant.value);
+            MoveToSalesArea(plantObject);
         }
         else
         {
-            Debug.Log("No plants in the stack!"); // Eğer stack boşsa, log'a yaz
+            Debug.Log("No plants in the stack!");
         }
 
         UpdateAnimatorState();
@@ -202,10 +187,10 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void MoveToSalesArea(GameObject plantObject)
     {
-        Vector3 endPosition = salesArea.transform.position; // Bitkinin hedef konumu (Sales Area'nın konumu)
-        float journeyTime = 1.0f; // Bitkinin başlangıç konumundan hedef konuma gitmesi için gereken süre
-        float jumpPower = 2f; // Bitkinin zıplama gücü
-        int numJumps = 1; // Bitkinin kaç kere zıplayacağı
+        Vector3 endPosition = salesArea.transform.position;
+        float journeyTime = 1.0f;
+        float jumpPower = 2f;
+        int numJumps = 1;
 
         plantObject.transform.DOLookAt(salesArea.transform.position, journeyTime);
         plantObject.transform.DOJump(endPosition, jumpPower, numJumps, journeyTime)
@@ -262,10 +247,10 @@ public class PlayerBehaviour : MonoBehaviour
                 return;
             }
 
-            childObjectsWithAnimators[activeChildIndex].SetActive(false); // Eski çocuğu kapat
-            childObjectsWithAnimators[newChildIndex].SetActive(true); // Yeni çocuğu aç
-            animator.Rebind(); // Yeni çocuğun animatörünü resetle ve başlat
-            activeChildIndex = newChildIndex; // Aktif çocuğun indexini güncelle
+            childObjectsWithAnimators[activeChildIndex].SetActive(false);
+            childObjectsWithAnimators[newChildIndex].SetActive(true);
+            animator.Rebind(); //resetle ve başlat
+            activeChildIndex = newChildIndex;
 
             if (audioSource != null && childSwitchSound != null)
             {
@@ -274,22 +259,18 @@ public class PlayerBehaviour : MonoBehaviour
 
             levelUpParticle.Play();
 
-            SwitchHandObject(activeChildIndex); // Elin indexini güncelle
+            SwitchHandObject(activeChildIndex);
         }
     }
 
     public void SwitchHandObject(int newHandIndex)
     {
-        // Eğer yeni dizin geçerli bir dizinse ve farklı bir dizinse
         if (newHandIndex >= 0 && newHandIndex < handObjects.Length && newHandIndex != activeHandIndex)
         {
-            // Eski aktif eli deaktif hale getir
             handObjects[activeHandIndex].SetActive(false);
 
-            // Yeni aktif eli aktif hale getir
             handObjects[newHandIndex].SetActive(true);
 
-            // Aktif eli değiştir
             handObject = handObjects[newHandIndex];
             activeHandIndex = newHandIndex;
         }
@@ -323,18 +304,17 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void UpgradeCharacter(int newIndex)
     {
-        // Karakterin taşıma kapasitesini ve hızını yükseltin
         if (newIndex == 1)
         {
             speed += 100;
-            playerController.moveSpeed = speed;  // Karakterin hızını güncelle
+            playerController.moveSpeed = speed;
             maxPlantCapacity += 2;
         }
         else if (newIndex == 2)
         {
-            speed += 200;  // Örneğin, hızı daha fazla artırabiliriz
-            playerController.moveSpeed = speed;  // Karakterin hızını güncelle
-            maxPlantCapacity += 3;  // Örneğin, taşıma kapasitesini daha fazla artırabiliriz
+            speed += 200;
+            playerController.moveSpeed = speed;
+            maxPlantCapacity += 3;
         }
     }
 

@@ -7,18 +7,8 @@ public class Follower : MonoBehaviour
 {
     public PathCreator pathCreator;
     public float speed = 2f;
-    //public bool isRotate;
-    //public Vector3 quaternionPos;
 
     private float distanceTravelled;
-
-    private void Start()
-    {
-        //if (isRotate)
-        //{
-        //    transform.rotation = Quaternion.Euler(quaternionPos);
-        //}
-    }
 
     private void Update()
     {

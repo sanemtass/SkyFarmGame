@@ -52,7 +52,6 @@ public class UIManager : MonoBehaviour
 
     private void CheckGoldValueForArea(int goldAmount)
     {
-        // Gold amount is less than areaValue, disable the button
         if (goldAmount < GameManager.Instance.areaValue)
         {
             addAreaButton.interactable = false;

@@ -11,20 +11,14 @@ public class PlantController : MonoBehaviour
 
     private void Start()
     {
-        // Büyüme sürecini başlat
         StartCoroutine(Grow());
         isGrown = true;
     }
 
     private IEnumerator Grow()
     {
-        // Bekleme süresi olarak bitkinin büyüme süresini kullan
         yield return new WaitForSeconds(plants.growthTime);
 
-        // Bitki büyüdükten sonra yapılacak işlemler (örneğin, bitkinin görünümünü değiştirmek)
-
         Debug.Log("Plant has grown.");
-        
-        
     }
 }

@@ -6,14 +6,14 @@ public class PlantedAreaSpawner : MonoBehaviour
 {
     public static PlantedAreaSpawner Instance;
 
-    public GameObject plantedAreaPrefab; // PlantedArea prefab'ınız
+    public GameObject plantedAreaPrefab;
     public int initialAreaCount;
     public Vector3 gridSize;
     public float cellSize;
-    public float gridSpacing; // This will determine the space between the grids.
+    public float gridSpacing;
     public Vector2Int currentGridPosition = Vector2Int.zero;
 
-    public List<PlantedAreaController> allPlantedAreas; // Tüm PlantedArea'lar
+    public List<PlantedAreaController> allPlantedAreas;
 
     public int areasPerGroup = 18;
     private int currentAreaGroup = 0;
@@ -21,7 +21,7 @@ public class PlantedAreaSpawner : MonoBehaviour
     public float OFFSET_BETWEEN_GROUPS = 9.3f;
 
     public bool isSecondArea;
-    public float sayiaq;
+    public float number;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class PlantedAreaSpawner : MonoBehaviour
     void Start()
     {
         allPlantedAreas = new List<PlantedAreaController>();
-        gridOffset = isSecondArea ? sayiaq * (currentAreaGroup + 1) : 0; // if isSecondArea is true, gridOffset will be 30 * (currentAreaGroup + 1), otherwise 0
+        gridOffset = isSecondArea ? number * (currentAreaGroup + 1) : 0;
         SpawnInitialAreas();
     }
 
@@ -62,7 +62,6 @@ public class PlantedAreaSpawner : MonoBehaviour
             return;
         }
 
-        // Grid konumunu dünya konumuna çevir
         Vector3 spawnPosition = new Vector3(currentGridPosition.x * cellSize - gridSize.x / 2 + cellSize / 2 + gridOffset, 0, currentGridPosition.y * cellSize - gridSize.z / 2 + cellSize / 2);
 
         GameObject newArea = Instantiate(plantedAreaPrefab, spawnPosition, Quaternion.identity, transform);
@@ -75,7 +74,6 @@ public class PlantedAreaSpawner : MonoBehaviour
             }
         }
 
-        // Grid konumunu güncelle
         if (currentGridPosition.x < gridRows - 1)
         {
             currentGridPosition.x++;
@@ -85,12 +83,11 @@ public class PlantedAreaSpawner : MonoBehaviour
             currentGridPosition.x = 0;
             currentGridPosition.y++;
 
-            // If we've filled a group of areas, start a new one.
             if (allPlantedAreas.Count >= (currentAreaGroup + 1) * areasPerGroup)
             {
                 currentAreaGroup++;
                 gridOffset = currentAreaGroup * OFFSET_BETWEEN_GROUPS;
-                currentGridPosition = Vector2Int.zero; // reset grid position for new group
+                currentGridPosition = Vector2Int.zero;
             }
         }
 
@@ -98,14 +95,12 @@ public class PlantedAreaSpawner : MonoBehaviour
         {
             currentAreaGroup++;
 
-            // Increase the offset for the next group only for the second PlantedAreaSpawner
             if (isSecondArea)
             {
-                gridOffset += 30;  // Increase gridOffset by 30 for each new group.
+                gridOffset += 30;
             }
 
-            currentGridPosition = Vector2Int.zero; // reset grid position for new group
+            currentGridPosition = Vector2Int.zero;
         }
     }
-
 }

@@ -63,13 +63,8 @@ public class JoystickController : MonoBehaviour
             return;
         }
 
-        // Eski çocuk nesnenin animatörünü kapalı hale getir
         animators[activeChildIndex].enabled = false;
-
-        // Yeni çocuk nesnenin animatörünü açık hale getir
         animators[newIndex].enabled = true;
-
-        // Aktif çocuk nesnenin indexini güncelle
         activeChildIndex = newIndex;
     }
 }
